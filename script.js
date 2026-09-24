@@ -51,7 +51,7 @@ function typeWriter(text, i = 0) {
 }
 
 function drawStar(cx, cy, spikes, outerRadius, innerRadius, color) {
-  let rot = Math.PI / 2 * 3;
+  let rot = (Math.PI / 2) * 3;
   let x = cx;
   let y = cy;
   let step = Math.PI / spikes;
@@ -126,7 +126,7 @@ function checkScratchedPercentage() {
 
   const percentage = (transparentPixels / (pixels.length / 4)) * 100;
 
-  // Si se ha rascado más del 30%, desvanece la capa rascable para poder interactuar con el poema
+  // Si se ha rascado más del 30%, desvanece la capa rascable
   if (percentage > 30) {
     canvas.classList.add('disabled');
   }
@@ -135,9 +135,13 @@ function checkScratchedPercentage() {
 function startScratch(e) {
   isDrawing = true;
   
-  if (!musicStarted) {
-    audio.play().catch(err => console.log("Audio bloqueado:", err));
-    musicStarted = true;
+  // Reproducción compatible con navegadores móviles
+  if (!musicStarted && audio) {
+    audio.play().then(() => {
+      musicStarted = true;
+    }).catch(err => {
+      console.log("Esperando interacción adicional para reproducir audio:", err);
+    });
   }
 
   if (!typewriterStarted) {
@@ -176,12 +180,14 @@ function scratch(e) {
   ctx.moveTo(x, y);
 }
 
+// Eventos de ratón (PC)
 canvas.addEventListener('mousedown', startScratch);
 canvas.addEventListener('mouseup', stopScratch);
 canvas.addEventListener('mousemove', scratch);
 
-canvas.addEventListener('touchstart', startScratch);
+// Eventos táctiles (Móviles)
+canvas.addEventListener('touchstart', startScratch, { passive: true });
 canvas.addEventListener('touchend', stopScratch);
-canvas.addEventListener('touchmove', scratch);
+canvas.addEventListener('touchmove', scratch, { passive: true });
 
 window.onload = initCanvas;
