@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>karol</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Partículas de fondo -->
+  <div id="star-bg"></div>
+
+  <div class="card-container">
+    <!-- Contenido oculto que se revela al raspar -->
+    <div class="revealed-content">
+      <div class="photo-frame">
+        <img src="foto1.jpg" alt="Nuestra Foto" class="love-photo">
+      </div>
+      <h2 class="love-text">¡Te amo muchísimo! ❤️</h2>
+      
+      <!-- Contenedor con scroll para el poema largo -->
+      <div class="poem-container">
+        <p class="love-subtext" id="typewriterText"></p>
+      </div>
+    </div>
+
+    <!-- Capa fucsia estrellada que se raspa -->
+    <canvas id="scratchCanvas"></canvas>
+  </div>
+
+  <!-- Audio que se reproduce al raspar -->
+  <audio id="bgMusic" src="musica.mp3" loop></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
