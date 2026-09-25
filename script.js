@@ -186,8 +186,15 @@ canvas.addEventListener('mouseup', stopScratch);
 canvas.addEventListener('mousemove', scratch);
 
 // Eventos táctiles (Móviles)
-canvas.addEventListener('touchstart', startScratch, { passive: true });
+canvas.addEventListener('touchstart', startScratch);
 canvas.addEventListener('touchend', stopScratch);
-canvas.addEventListener('touchmove', scratch, { passive: true });
+canvas.addEventListener('touchmove', scratch);
+
+// Escucha el primer toque global para desbloquear el audio en celulares
+document.addEventListener('touchstart', function() {
+  if (audio && audio.paused) {
+    audio.play().catch(e => console.log("Cargando audio...", e));
+  }
+}, { once: true });
 
 window.onload = initCanvas;
